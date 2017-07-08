@@ -1,5 +1,6 @@
 package duongmh3.bittrexmanager.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,6 +30,8 @@ import jp.co.recruit_lifestyle.android.floatingview.FloatingViewManager;
 public class WarningChatHeadService extends Service implements FloatingViewListener {
     private static final String TAG = "ChatHeadService";
 
+    private static final int NOTIFICATION_ID = 9083150;
+
     /**
      * FloatingViewManager
      */
@@ -43,19 +47,25 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
                     @Override
                     public void run() {
                         iconView.setVisibility(View.VISIBLE);
+                        String status = "";
                         if (result.getResult() == WarningResultModel.Result.NORMAL) {
+                            status = "normal";
                             iconView.setBackgroundResource(R.drawable.circle_success);
                         } else if (result.getResult() == WarningResultModel.Result.WARNING) {
+                            status = "warning";
                             iconView.setBackgroundResource(R.drawable.circle_warning);
                         } else {
+                            status = "error";
                             iconView.setBackgroundResource(R.drawable.circle_error);
                         }
+
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTimeInMillis(result.getTimeEnd());
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
                         String timeFormat = simpleDateFormat.format(calendar.getTime());
                         iconView.setText(timeFormat);
+                        startForeground(NOTIFICATION_ID, createNotification(timeFormat + ": " + status));
                     }
                 });
             }
@@ -90,9 +100,11 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
         mFloatingViewManager.setActionTrashIconImage(R.drawable.ic_trash_action);
         final FloatingViewManager.Options options = new FloatingViewManager.Options();
         options.shape = FloatingViewManager.SHAPE_CIRCLE;
+        options.animateInitialMove = true;
+        mFloatingViewManager.setDisplayMode(FloatingViewManager.DISPLAY_MODE_SHOW_ALWAYS);
         //options.overMargin = (int) (8 * metrics.density);
         mFloatingViewManager.addViewToWindow(iconView, options);
-        //startForeground(NOTIFICATION_ID, createNotification());
+        startForeground(NOTIFICATION_ID, createNotification("Starting..."));
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 receiver, new IntentFilter("WarningBroadcast"));
@@ -146,5 +158,18 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
             mFloatingViewManager = null;
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private Notification createNotification(String contentWarning) {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setWhen(System.currentTimeMillis());
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle("Bittrex warning");
+        builder.setContentText(contentWarning);
+        builder.setOngoing(true);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setCategory(NotificationCompat.CATEGORY_SERVICE);
+
+        return builder.build();
     }
 }
