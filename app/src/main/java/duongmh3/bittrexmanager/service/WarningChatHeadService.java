@@ -5,14 +5,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import duongmh3.bittrexmanager.R;
+import duongmh3.bittrexmanager.model.WarningResultModel;
 import jp.co.recruit_lifestyle.android.floatingview.FloatingViewListener;
 import jp.co.recruit_lifestyle.android.floatingview.FloatingViewManager;
 
@@ -35,21 +37,27 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            long timeRequest = intent.getLongExtra("time", 0);
-            boolean result = intent.getBooleanExtra("result", false);
-            if (iconView != null) {
-                iconView.setVisibility(View.VISIBLE);
-                if (result) {
-                    iconView.setBackgroundResource(R.drawable.circle_success);
-                } else {
-                    iconView.setBackgroundResource(R.drawable.circle_fail);
-                }
+            final WarningResultModel result = (WarningResultModel) intent.getSerializableExtra("result");
+            if (result != null && iconView != null) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        iconView.setVisibility(View.VISIBLE);
+                        if (result.getResult() == WarningResultModel.Result.NORMAL) {
+                            iconView.setBackgroundResource(R.drawable.circle_success);
+                        } else if (result.getResult() == WarningResultModel.Result.WARNING) {
+                            iconView.setBackgroundResource(R.drawable.circle_warning);
+                        } else {
+                            iconView.setBackgroundResource(R.drawable.circle_error);
+                        }
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(timeRequest);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
-                String timeFormat = simpleDateFormat.format(calendar.getTime());
-                iconView.setText(timeFormat);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(result.getTimeEnd());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+                        String timeFormat = simpleDateFormat.format(calendar.getTime());
+                        iconView.setText(timeFormat);
+                    }
+                });
             }
         }
     };

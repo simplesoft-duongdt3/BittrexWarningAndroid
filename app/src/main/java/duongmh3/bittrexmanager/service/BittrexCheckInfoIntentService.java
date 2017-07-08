@@ -1,12 +1,13 @@
 package duongmh3.bittrexmanager.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -16,14 +17,15 @@ import java.util.List;
 
 import duongmh3.bittrexmanager.R;
 import duongmh3.bittrexmanager.model.MarketSummaryModel;
+import duongmh3.bittrexmanager.model.WarningResultModel;
 import duongmh3.bittrexmanager.model.WarningSettingModel;
-import es.dmoral.toasty.Toasty;
 import io.paperdb.Paper;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
 
 public class BittrexCheckInfoIntentService extends IntentService {
     @NonNull
@@ -37,7 +39,9 @@ public class BittrexCheckInfoIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        boolean requestSuccess = false;
+        WarningResultModel warningResultModel = new WarningResultModel();
+        warningResultModel.setResult(WarningResultModel.Result.ERROR);
+        warningResultModel.setTimeStart(System.currentTimeMillis());
         if (intent != null) {
             Request request = new Request.Builder()
                     .url("https://bittrex.com/api/v1.1/public/getmarketsummaries")
@@ -69,17 +73,30 @@ public class BittrexCheckInfoIntentService extends IntentService {
                         }
 
                         if (isWarning) {
-                            playWarningShow();
+                            warningResultModel.setResult(WarningResultModel.Result.WARNING);
+                            warningUser();
+                        } else {
+                            warningResultModel.setResult(WarningResultModel.Result.NORMAL);
                         }
-                        requestSuccess = true;
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                warningResultModel.setResult(WarningResultModel.Result.ERROR);
             }
 
-            sendWarningBroadcast(requestSuccess);
+            warningResultModel.setTimeEnd(System.currentTimeMillis());
+            warningResultModel.calTotalTime();
+            sendWarningBroadcast(warningResultModel);
             SyncWakefulReceiver.completeWakefulIntent(intent);
+        }
+    }
+
+    private void warningUser() {
+        if (Util.isPlaySoundWhenWarning()) {
+            playWarningShow();
+        } else {
+            vibrate();
         }
     }
 
@@ -98,6 +115,12 @@ public class BittrexCheckInfoIntentService extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void vibrate() {
+        // Get instance of Vibrator from current Context
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(4000);
     }
 
     private static WarningSettingModel loadConfig() {
@@ -132,6 +155,7 @@ public class BittrexCheckInfoIntentService extends IntentService {
         Request request = new Request.Builder()
                 .url("https://shebeauty.com.vn/bittrex_warning_config.txt")
                 .build();
+
         try {
             client.newCall(request).enqueue(new Callback() {
                 @Override
@@ -156,9 +180,8 @@ public class BittrexCheckInfoIntentService extends IntentService {
         }
     }
 
-    private void sendWarningBroadcast(boolean result) {
+    private void sendWarningBroadcast(WarningResultModel result) {
         Intent intent = new Intent("WarningBroadcast");
-        intent.putExtra("time", System.currentTimeMillis());
         intent.putExtra("result", result);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }

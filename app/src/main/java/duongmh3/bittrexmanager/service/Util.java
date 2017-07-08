@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
+import io.paperdb.Paper;
+
 /**
  * Created by doanthanhduong on 2/3/17.
  */
@@ -36,4 +38,11 @@ public class Util {
         context.startService(new Intent(context, WarningChatHeadService.class));
     }
 
+    public static boolean isPlaySoundWhenWarning() {
+        return Paper.book().read("config_sound_warning", true);
+    }
+
+    public static void setPlaySoundWhenWarning(boolean playSound) {
+        Paper.book().write("config_sound_warning", playSound);
+    }
 }

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import duongmh3.bittrexmanager.service.BittrexCheckInfoIntentService;
@@ -12,10 +13,20 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
+    private CheckBox cbPlaySound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cbPlaySound = (CheckBox) findViewById(R.id.cbPlaySound);
+        cbPlaySound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.setPlaySoundWhenWarning(cbPlaySound.isChecked());
+            }
+        });
 
         View btStartWarningService = findViewById(R.id.btStartWarningUiService);
         btStartWarningService.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cbPlaySound.setChecked(Util.isPlaySoundWhenWarning());
     }
 }
