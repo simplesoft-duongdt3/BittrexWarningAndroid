@@ -15,3 +15,7 @@ z
 Japp/src/main/java/duongmh3/bittrexmanager/service/SyncWakefulReceiver.java,1/f/1fbffd878ad3676d3e2de91c76be703c33d1ed7a
 „
 Tapp/src/main/java/duongmh3/bittrexmanager/service/BittrexCheckInfoIntentService.java,0/5/055d7d3cdb3604212ada118547349cd45dedf127
+x
+Happ/src/main/java/duongmh3/bittrexmanager/model/WarningSettingModel.java,0/7/07602261d6cdbde2fff65045b962c1589b1b860d
+b
+2app/src/main/java/duongmh3/bittrexmanager/App.java,f/1/f1b13dd49732df19565d4cddceba9504b860b332

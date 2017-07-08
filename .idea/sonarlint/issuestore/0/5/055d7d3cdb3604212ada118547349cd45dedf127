@@ -1,3 +1,9 @@
 
 msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(Î¡“Ä
-Fsquid:S00108")Either remove or fill this block of code.(”ı¾8ìıöíÑ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÿŸÔïÑ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8š¨¹ïÑ+
+jsquid:S1192"ODefine a constant instead of duplicating this literal "config_warning" 4 times.(±¾Ş
+8 ¹ÎïÑ+
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(Áä…—ıÿÿÿÿ8®½éîÑ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Æò×ïÑ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8—ô¹ïÑ+

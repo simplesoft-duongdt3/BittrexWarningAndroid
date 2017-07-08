@@ -1,2 +1,4 @@
 
 msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(¼ùÄ
+jsquid:MaximumInheritanceDepth"<This class has 7 parents which is greater than 5 authorized.(²Ú±8ñÌ«îÑ+
+fsquid:UselessImportCheck">Remove this unused import 'android.support.v7.widget.Toolbar'.(à½£8‡«ãïÑ+

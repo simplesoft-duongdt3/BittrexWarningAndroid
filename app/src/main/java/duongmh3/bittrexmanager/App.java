@@ -2,7 +2,7 @@ package duongmh3.bittrexmanager;
 
 import android.app.Application;
 
-import duongmh3.bittrexmanager.service.AlarmSyncUtil;
+import duongmh3.bittrexmanager.service.Util;
 import io.paperdb.Paper;
 
 /**
@@ -15,6 +15,7 @@ public class App extends Application {
         super.onCreate();
         Paper.init(this);
 
-        AlarmSyncUtil.startAlarm(this);
+        Util.startServiceWarning(this);
+
     }
 }

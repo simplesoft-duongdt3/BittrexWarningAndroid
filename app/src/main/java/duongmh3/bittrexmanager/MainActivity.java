@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import duongmh3.bittrexmanager.service.BittrexCheckInfoIntentService;
+import duongmh3.bittrexmanager.service.Util;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        View btStartWarningService = findViewById(R.id.btStartWarningUiService);
+        btStartWarningService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.startServiceWarning(MainActivity.this);
+            }
+        });
         View btUpdateConfigWarning = findViewById(R.id.btUpdateConfigWarning);
         btUpdateConfigWarning.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,5 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+
     }
 }

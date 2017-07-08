@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -77,17 +78,7 @@ public class BittrexCheckInfoIntentService extends IntentService {
                 e.printStackTrace();
             }
 
-            final boolean finalRequestSuccess = requestSuccess;
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (finalRequestSuccess) {
-                        Toasty.success(getApplicationContext(), "Service Bittrex success!", Toast.LENGTH_SHORT, true).show();
-                    } else {
-                        Toasty.error(getApplicationContext(), "Service Bittrex fail!", Toast.LENGTH_SHORT, true).show();
-                    }
-                }
-            });
+            sendWarningBroadcast(requestSuccess);
             SyncWakefulReceiver.completeWakefulIntent(intent);
         }
     }
@@ -136,6 +127,7 @@ public class BittrexCheckInfoIntentService extends IntentService {
     public interface CallbackGetConfig {
         void onDoneEvent(boolean success);
     }
+
     public static void getConfigWarningFromCloudAsync(@NonNull final CallbackGetConfig callbackGetConfig) {
         Request request = new Request.Builder()
                 .url("https://shebeauty.com.vn/bittrex_warning_config.txt")
@@ -162,5 +154,12 @@ public class BittrexCheckInfoIntentService extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void sendWarningBroadcast(boolean result) {
+        Intent intent = new Intent("WarningBroadcast");
+        intent.putExtra("time", System.currentTimeMillis());
+        intent.putExtra("result", result);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
