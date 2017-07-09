@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
@@ -48,15 +49,20 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
                     public void run() {
                         iconView.setVisibility(View.VISIBLE);
                         String status = "";
+                        @DrawableRes
+                        int bgNotification;
                         if (result.getResult() == WarningResultModel.Result.NORMAL) {
                             status = "normal";
+                            bgNotification = R.drawable.circle_success;
                             iconView.setBackgroundResource(R.drawable.circle_success);
                         } else if (result.getResult() == WarningResultModel.Result.WARNING) {
                             status = "warning";
                             iconView.setBackgroundResource(R.drawable.circle_warning);
+                            bgNotification = R.drawable.circle_warning;
                         } else {
                             status = "error";
                             iconView.setBackgroundResource(R.drawable.circle_error);
+                            bgNotification = R.drawable.circle_error;
                         }
 
 
@@ -65,7 +71,7 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
                         String timeFormat = simpleDateFormat.format(calendar.getTime());
                         iconView.setText(timeFormat);
-                        startForeground(NOTIFICATION_ID, createNotification(timeFormat + ": " + status));
+                        startForeground(NOTIFICATION_ID, createNotification(timeFormat + ": " + status, bgNotification));
                     }
                 });
             }
@@ -104,7 +110,7 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
         mFloatingViewManager.setDisplayMode(FloatingViewManager.DISPLAY_MODE_SHOW_ALWAYS);
         //options.overMargin = (int) (8 * metrics.density);
         mFloatingViewManager.addViewToWindow(iconView, options);
-        startForeground(NOTIFICATION_ID, createNotification("Starting..."));
+        startForeground(NOTIFICATION_ID, createNotification("Starting...", R.drawable.circle_success) );
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 receiver, new IntentFilter("WarningBroadcast"));
@@ -160,10 +166,10 @@ public class WarningChatHeadService extends Service implements FloatingViewListe
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-    private Notification createNotification(String contentWarning) {
+    private Notification createNotification(String contentWarning, @DrawableRes int backgroundNotification) {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setWhen(System.currentTimeMillis());
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(backgroundNotification);
         builder.setContentTitle("Bittrex warning");
         builder.setContentText(contentWarning);
         builder.setOngoing(true);

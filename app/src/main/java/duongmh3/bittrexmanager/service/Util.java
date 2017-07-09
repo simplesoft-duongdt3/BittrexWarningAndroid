@@ -45,4 +45,11 @@ public class Util {
     public static void setPlaySoundWhenWarning(boolean playSound) {
         Paper.book().write("config_sound_warning", playSound);
     }
+    public static boolean isVibrateWhenWarning() {
+        return Paper.book().read("config_vibrate_warning", true);
+    }
+
+    public static void setVibrateWhenWarning(boolean vibrate) {
+        Paper.book().write("config_vibrate_warning", vibrate);
+    }
 }

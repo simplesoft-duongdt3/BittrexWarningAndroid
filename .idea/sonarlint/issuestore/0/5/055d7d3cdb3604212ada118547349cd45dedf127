@@ -1,10 +1,10 @@
 
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8—ô¹ïÑ+
+Gsquid:S1068"+Remove this unused "handler" private field.(Ìöñœ8•ŸƒÒ+
 jsquid:S1192"ODefine a constant instead of duplicating this literal "config_warning" 4 times.(±¾Ş
 8 ¹ÎïÑ+
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÿŸÔïÑ+
 Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8š¨¹ïÑ+
 msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(Î¡“Ä
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Æò×ïÑ+
-Gsquid:S1068"+Remove this unused "handler" private field.(Ìöñœ8•ŸƒÒ+
-Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8—ô¹ïÑ+
 ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(Áä…—ıÿÿÿÿ8®½éîÑ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Æò×ïÑ+
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ÿŸÔïÑ+

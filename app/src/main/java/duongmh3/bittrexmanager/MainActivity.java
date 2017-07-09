@@ -14,6 +14,7 @@ import es.dmoral.toasty.Toasty;
 public class MainActivity extends AppCompatActivity {
 
     private CheckBox cbPlaySound;
+    private CheckBox cbVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Util.setPlaySoundWhenWarning(cbPlaySound.isChecked());
+            }
+        });
+        cbVibrate = (CheckBox) findViewById(R.id.cbVibrate);
+        cbVibrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Util.setVibrateWhenWarning(cbVibrate.isChecked());
             }
         });
 
@@ -62,5 +70,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         cbPlaySound.setChecked(Util.isPlaySoundWhenWarning());
+        cbVibrate.setChecked(Util.isVibrateWhenWarning());
     }
 }

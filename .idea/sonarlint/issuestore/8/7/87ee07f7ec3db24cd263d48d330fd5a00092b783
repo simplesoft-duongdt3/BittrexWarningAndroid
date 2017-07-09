@@ -1,6 +1,5 @@
 
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÖŒýµ8ß©©„Ò+
-Lsquid:S1481"+Remove this unused "action" local variable.(ü£Ãûÿÿÿÿ8ïÆ¬ƒÒ+
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÅÕáÂøÿÿÿÿ8¥Æÿ‚Ò+
 [squid:S1854":Remove this useless assignment to local variable "action".(ü£Ãûÿÿÿÿ8ïÆ¬ƒÒ+
+Lsquid:S1481"+Remove this unused "action" local variable.(ü£Ãûÿÿÿÿ8ïÆ¬ƒÒ+
+gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ÖŒýµ8ß©©„Ò+
 msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(Î¡“Ä

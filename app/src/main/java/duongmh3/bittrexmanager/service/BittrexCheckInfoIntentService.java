@@ -95,7 +95,9 @@ public class BittrexCheckInfoIntentService extends IntentService {
     private void warningUser() {
         if (Util.isPlaySoundWhenWarning()) {
             playWarningShow();
-        } else {
+        }
+
+        if (Util.isVibrateWhenWarning()) {
             vibrate();
         }
     }
