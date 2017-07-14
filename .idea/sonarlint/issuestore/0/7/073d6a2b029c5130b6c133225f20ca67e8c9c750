@@ -1,0 +1,7 @@
+
+Ssquid:S1172"2Remove this unused method parameter "taskManager".(áâŒˆøÿÿÿÿ8ˆÓ÷Ó+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ïàˆñøÿÿÿÿ8ˆÓ÷Ó+
+ysquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(äàŸÖüÿÿÿÿ8ˆÓ÷Ó+
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ïàˆñøÿÿÿÿ8ˆÓ÷Ó+
+Ksquid:S1172"/Remove this unused method parameter "activity".(²ıÈÏ8ˆÓ÷Ó+
+Vsquid:S1118":Add a private constructor to hide the implicit public one.(¸Î’ç8ˆÓ÷Ó+

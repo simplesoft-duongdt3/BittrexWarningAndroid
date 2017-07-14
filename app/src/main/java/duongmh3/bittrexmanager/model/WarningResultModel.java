@@ -1,33 +1,49 @@
 package duongmh3.bittrexmanager.model;
 
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.util.ArrayList;
+import java.util.List;
+
+import duongmh3.bittrexmanager.listcoin.CoinViewModel;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import static duongmh3.bittrexmanager.model.WarningResultModel.Result.ERROR;
 import static duongmh3.bittrexmanager.model.WarningResultModel.Result.NORMAL;
 import static duongmh3.bittrexmanager.model.WarningResultModel.Result.WARNING;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
  * Created by admin on 7/8/17.
  */
 
+@Setter
+@Getter
 public class WarningResultModel implements Serializable {
-    public void calTotalTime() {
-        totalTimeProcess = timeEnd - timeStart;
-    }
-
     @IntDef(value = {NORMAL, WARNING, ERROR})
+    @Retention(RUNTIME)
     public @interface Result {
         int NORMAL = 1;
         int WARNING = 2;
         int ERROR = 3;
     }
+
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @Result
     private int result;
     private long timeStart;
     private long timeEnd;
-    private long totalTimeProcess;
+    private String errorLog;
+
+    @NonNull
+    private final ArrayList<CoinViewModel> coinViewModels = new ArrayList<>();
 
     @Result
     public int getResult() {
@@ -38,24 +54,7 @@ public class WarningResultModel implements Serializable {
         this.result = result;
     }
 
-    public long getTimeStart() {
-        return timeStart;
+    public long getTotalTime() {
+        return timeEnd - timeStart;
     }
-
-    public void setTimeStart(long timeStart) {
-        this.timeStart = timeStart;
-    }
-
-    public long getTimeEnd() {
-        return timeEnd;
-    }
-
-    public void setTimeEnd(long timeEnd) {
-        this.timeEnd = timeEnd;
-    }
-
-    public long getTotalTimeProcess() {
-        return totalTimeProcess;
-    }
-
 }

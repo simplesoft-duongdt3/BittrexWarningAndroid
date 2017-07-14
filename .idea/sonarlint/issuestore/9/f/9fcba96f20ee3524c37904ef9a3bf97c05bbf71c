@@ -1,0 +1,4 @@
+
+tsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(’Ç‚8Ô”÷Ó+
+Vsquid:UselessImportCheck"(Remove this unused import 'lombok.Data'.(÷í«ÿÿÿÿÿ8÷ˆùÓ+
+Xsquid:UselessImportCheck"/Remove this unused import 'lombok.AccessLevel'.(ˆ¥ó¹8£Á‡ùÓ+

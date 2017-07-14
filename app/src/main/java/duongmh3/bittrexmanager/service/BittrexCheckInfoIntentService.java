@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import duongmh3.bittrexmanager.R;
+import duongmh3.bittrexmanager.listcoin.CoinViewModel;
 import duongmh3.bittrexmanager.model.MarketSummaryModel;
 import duongmh3.bittrexmanager.model.WarningResultModel;
 import duongmh3.bittrexmanager.model.WarningSettingModel;
@@ -51,27 +52,23 @@ public class BittrexCheckInfoIntentService extends IntentService {
                 if (response.isSuccessful()) {
                     MarketSummaryModel marketSummaryModel = new Gson().fromJson(response.body().charStream(), MarketSummaryModel.class);
                     if (marketSummaryModel.isSuccess()) {
-                        WarningSettingModel warningSettingViewModel = loadConfig();
-                        HashMap<String, WarningSettingModel.SettingWarningItem> mapSetting = new HashMap<>();
-                        List<WarningSettingModel.SettingWarningItem> lstSettingWarning = warningSettingViewModel.getLstSettingWarning();
-                        for (WarningSettingModel.SettingWarningItem settingWarningItem : lstSettingWarning) {
-                            mapSetting.put(settingWarningItem.getMarketName(), settingWarningItem);
-                        }
+                        HashMap<String, WarningSettingModel.SettingWarningItem> mapSetting = createSettingWarningItemHashMap();
 
-                        boolean isWarning = false;
                         for (MarketSummaryModel.Result result : marketSummaryModel.getResult()) {
                             WarningSettingModel.SettingWarningItem settingWarningItem = mapSetting.get(result.getMarketName());
                             if (settingWarningItem != null) {
-                                boolean isUpWarning = Double.valueOf(result.getLast()) >= Double.valueOf(settingWarningItem.getMax());
-                                boolean isDownWarning = Double.valueOf(result.getLast()) <= Double.valueOf(settingWarningItem.getMin());
-
-                                if (isDownWarning || isUpWarning) {
-                                    isWarning = true;
-                                    break;
-                                }
+                                CoinViewModel coinViewModel = parseCoinViewModel(result, settingWarningItem);
+                                warningResultModel.getCoinViewModels().add(coinViewModel);
                             }
                         }
 
+                        boolean isWarning = false;
+                        for (CoinViewModel coinViewModel : warningResultModel.getCoinViewModels()) {
+                            if (coinViewModel.getWarningStatus() != CoinViewModel.Status.NONE) {
+                                isWarning = true;
+                                break;
+                            }
+                        }
                         if (isWarning) {
                             warningResultModel.setResult(WarningResultModel.Result.WARNING);
                             warningUser();
@@ -81,15 +78,64 @@ public class BittrexCheckInfoIntentService extends IntentService {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                warningResultModel.setErrorLog(e.getMessage());
                 warningResultModel.setResult(WarningResultModel.Result.ERROR);
             }
 
             warningResultModel.setTimeEnd(System.currentTimeMillis());
-            warningResultModel.calTotalTime();
             sendWarningBroadcast(warningResultModel);
             SyncWakefulReceiver.completeWakefulIntent(intent);
         }
+    }
+
+    @NonNull
+    private HashMap<String, WarningSettingModel.SettingWarningItem> createSettingWarningItemHashMap() {
+        WarningSettingModel warningSettingViewModel = loadConfig();
+        HashMap<String, WarningSettingModel.SettingWarningItem> mapSetting = new HashMap<>();
+        List<WarningSettingModel.SettingWarningItem> lstSettingWarning = warningSettingViewModel.getLstSettingWarning();
+        for (WarningSettingModel.SettingWarningItem settingWarningItem : lstSettingWarning) {
+            mapSetting.put(settingWarningItem.getMarketName(), settingWarningItem);
+        }
+        return mapSetting;
+    }
+
+    @NonNull
+    private CoinViewModel parseCoinViewModel(MarketSummaryModel.Result result, WarningSettingModel.SettingWarningItem settingWarningItem) {
+        double bidNow = Double.parseDouble(result.getBid());
+        double configMax = Double.parseDouble(settingWarningItem.getMax());
+        double up = bidNow - configMax;
+        boolean isUpWarning = up > 0;
+        double configMin = Double.parseDouble(settingWarningItem.getMin());
+        boolean isDownWarning = bidNow <= configMin;
+
+        CoinViewModel coinViewModel = new CoinViewModel();
+        coinViewModel.setCoinImageUrl(settingWarningItem.getImageUrl());
+        if (isDownWarning) {
+            coinViewModel.setWarningStatus(CoinViewModel.Status.DOWN);
+        } else if (isUpWarning) {
+            coinViewModel.setWarningStatus(CoinViewModel.Status.UP);
+        } else {
+            coinViewModel.setWarningStatus(CoinViewModel.Status.NONE);
+        }
+
+        double preDayValue = Double.parseDouble(result.getPrevDay());
+        int percentChangeWithYesterday = (int)(((bidNow - preDayValue) / preDayValue) * 100);
+        coinViewModel.setStatusDescription(String.valueOf(percentChangeWithYesterday));
+
+        if (percentChangeWithYesterday > 0 ) {
+            coinViewModel.setStatus(CoinViewModel.Status.UP);
+        } else if (percentChangeWithYesterday < 0) {
+            coinViewModel.setStatus(CoinViewModel.Status.DOWN);
+        } else {
+            coinViewModel.setStatus(CoinViewModel.Status.NONE);
+        }
+        coinViewModel.setStatusDescription(String.valueOf(percentChangeWithYesterday));
+        coinViewModel.setMarketName(result.getMarketName());
+        coinViewModel.setCurrentBid(result.getBid());
+        coinViewModel.setCurrentAsk(result.getAsk());
+        coinViewModel.setConfigMin(settingWarningItem.getMin());
+        coinViewModel.setConfigMax(settingWarningItem.getMax());
+        return coinViewModel;
     }
 
     private void warningUser() {
@@ -106,13 +152,7 @@ public class BittrexCheckInfoIntentService extends IntentService {
         try {
             MediaPlayer player = MediaPlayer.create(this, R.raw.warning);
             player.start();
-            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    mp.release();
-                }
-            });
+            player.setOnCompletionListener(mp -> mp.release());
             player.setLooping(false);
         } catch (Exception e) {
             e.printStackTrace();

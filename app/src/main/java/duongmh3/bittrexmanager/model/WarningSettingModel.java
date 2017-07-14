@@ -1,25 +1,27 @@
 package duongmh3.bittrexmanager.model;
-import java.io.Serializable;
-import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by admin on 6/25/17.
  */
+@Getter
+@Setter
 public class WarningSettingModel implements Serializable {
     @SerializedName("lstSettingWarning")
     @Expose
-    private List<SettingWarningItem> lstSettingWarning = null;
+    private ArrayList<SettingWarningItem> lstSettingWarning = new ArrayList<>();
 
-    public List<SettingWarningItem> getLstSettingWarning() {
-        return lstSettingWarning;
-    }
-
-    public void setLstSettingWarning(List<SettingWarningItem> lstSettingWarning) {
-        this.lstSettingWarning = lstSettingWarning;
-    }
-
+    @Getter
+    @Setter
     public static class SettingWarningItem implements Serializable {
 
         @SerializedName("marketName")
@@ -31,30 +33,8 @@ public class WarningSettingModel implements Serializable {
         @SerializedName("max")
         @Expose
         private String max;
-
-        public String getMarketName() {
-            return marketName;
-        }
-
-        public void setMarketName(String marketName) {
-            this.marketName = marketName;
-        }
-
-        public String getMin() {
-            return min;
-        }
-
-        public void setMin(String min) {
-            this.min = min;
-        }
-
-        public String getMax() {
-            return max;
-        }
-
-        public void setMax(String max) {
-            this.max = max;
-        }
-
+        @SerializedName("imageUrl")
+        @Expose
+        private String imageUrl;
     }
 }
