@@ -1,4 +1,4 @@
 
+vsquid:UselessImportCheck"MRemove this unused import 'duongmh3.bittrexmanager.model.MarketSummaryModel'.(ÊÉü8‚•Ó‹Ô+
 tsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(©ó¯Å8‰íœ÷Ó+
 |squid:UselessImportCheck"SRemove this unused import 'duongmh3.bittrexmanager.common.list.RecyclerViewHolder'.(ÜÎØ8ïäÔ+
-vsquid:UselessImportCheck"MRemove this unused import 'duongmh3.bittrexmanager.model.MarketSummaryModel'.(ÊÉü8‚•Ó‹Ô+

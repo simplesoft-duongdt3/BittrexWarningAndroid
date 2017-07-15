@@ -1,10 +1,10 @@
 
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(Áä…—ýÿÿÿÿ8ÆÕû€Ô+
 Gsquid:S1068"+Remove this unused "handler" private field.(Ìöñœ8ÆÕû€Ô+
 Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ÂæïƒÔ+
+Msquid:S1612",Replace this lambda with a method reference.(ðâ¾Òúÿÿÿÿ8ÂæïƒÔ+
+msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(Î¡“Ä
 jsquid:S1192"ODefine a constant instead of duplicating this literal "config_warning" 4 times.(±¾Þ
 8ÂæïƒÔ+
-Msquid:S1612",Replace this lambda with a method reference.(ðâ¾Òúÿÿÿÿ8ÂæïƒÔ+
-ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(Áä…—ýÿÿÿÿ8ÆÕû€Ô+
 Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ÂæïƒÔ+
 Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ÂæïƒÔ+
-msquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(Î¡“Ä

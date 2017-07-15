@@ -17,8 +17,6 @@ x
 Happ/src/main/java/duongmh3/bittrexmanager/model/WarningSettingModel.java,0/7/07602261d6cdbde2fff65045b962c1589b1b860d
 b
 2app/src/main/java/duongmh3/bittrexmanager/App.java,f/1/f1b13dd49732df19565d4cddceba9504b860b332
-k
-;app/src/main/java/duongmh3/bittrexmanager/service/Util.java,1/a/1a7af814b2748dde07edddfb8e27253735d752ee
 w
 Gapp/src/main/java/duongmh3/bittrexmanager/model/WarningResultModel.java,6/f/6f47717ede10bff276105ceb2e8c19da6e283039
 }
@@ -81,3 +79,7 @@ Lapp/src/main/java/duongmh3/bittrexmanager/common/list/RecyclerViewModel.java,6
 Rapp/src/main/java/duongmh3/bittrexmanager/listcoin/CoinDetailViewHolderBinder.java,8/3/83efdfbf1c3ac07fb28e5e28372446d9f8f5180f
 x
 Happ/src/main/java/duongmh3/bittrexmanager/listcoin/ListCoinActivity.java,0/1/01fa350697ec03df41e59f63545736451c50d98a
+F
+app/proguard-rules.pro,9/e/9e08934d811afe28fbc77aaa3c0d747b94348db9
+r
+Bapp/src/main/java/duongmh3/bittrexmanager/service/ServiceUtil.java,0/8/08ac01634e7d8166001861145b4c39f8fc24db78

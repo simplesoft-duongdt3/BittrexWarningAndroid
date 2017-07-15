@@ -1,4 +1,4 @@
 
 Ysquid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ôã»‚Ô+
-rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(¦Û®ïùÿÿÿÿ
 osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÿÄÿ’8œÀºùÓ+
+rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(¦Û®ïùÿÿÿÿ
