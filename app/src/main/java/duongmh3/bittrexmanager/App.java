@@ -2,7 +2,7 @@ package duongmh3.bittrexmanager;
 
 import android.app.Application;
 
-import duongmh3.bittrexmanager.service.Util;
+import duongmh3.bittrexmanager.service.ServiceUtil;
 import io.paperdb.Paper;
 
 /**
@@ -14,6 +14,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Paper.init(this);
-        Util.startServiceWarning(this);
+        ServiceUtil.startServiceWarning(this);
     }
 }

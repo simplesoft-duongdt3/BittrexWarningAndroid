@@ -77,6 +77,25 @@
                 android:layout_height="wrap_content"
                 app:layout_widthPercent="40%w"
                 tools:text="Max: 0.001899" />
+            <TextView
+                android:id="@+id/tvMin24h"
+                android:layout_below="@+id/tvConfigMin"
+                android:layout_toRightOf="@+id/ivCoin"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="40%w"
+                tools:text="Min 24h: 0.009899" />
+
+            <TextView
+                android:id="@+id/tvMax24h"
+                android:layout_below="@+id/tvConfigMin"
+                android:layout_toRightOf="@+id/tvMin24h"
+                android:padding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="40%w"
+                tools:text="Max 24h: 0.001899" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ivStatus"

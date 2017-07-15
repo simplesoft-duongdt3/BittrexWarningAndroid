@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import duongmh3.bittrexmanager.R;
+import duongmh3.bittrexmanager.common.Util;
 import duongmh3.bittrexmanager.listcoin.CoinViewModel;
 import duongmh3.bittrexmanager.model.MarketSummaryModel;
 import duongmh3.bittrexmanager.model.WarningResultModel;
@@ -109,6 +110,10 @@ public class BittrexCheckInfoIntentService extends IntentService {
         boolean isDownWarning = bidNow <= configMin;
 
         CoinViewModel coinViewModel = new CoinViewModel();
+        String volume = Util.formatNumber(Double.parseDouble(result.getBaseVolume()), "#,##0");
+        coinViewModel.setVol(volume);
+        coinViewModel.setMin24h(result.getLow());
+        coinViewModel.setMax24h(result.getHigh());
         coinViewModel.setCoinImageUrl(settingWarningItem.getImageUrl());
         if (isDownWarning) {
             coinViewModel.setWarningStatus(CoinViewModel.Status.DOWN);
@@ -139,11 +144,11 @@ public class BittrexCheckInfoIntentService extends IntentService {
     }
 
     private void warningUser() {
-        if (Util.isPlaySoundWhenWarning()) {
+        if (ServiceUtil.isPlaySoundWhenWarning()) {
             playWarningShow();
         }
 
-        if (Util.isVibrateWhenWarning()) {
+        if (ServiceUtil.isVibrateWhenWarning()) {
             vibrate();
         }
     }

@@ -7,7 +7,7 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import duongmh3.bittrexmanager.service.BittrexCheckInfoIntentService;
-import duongmh3.bittrexmanager.service.Util;
+import duongmh3.bittrexmanager.service.ServiceUtil;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,12 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cbPlaySound = (CheckBox) findViewById(R.id.cbPlaySound);
-        cbPlaySound.setOnClickListener(view -> Util.setPlaySoundWhenWarning(cbPlaySound.isChecked()));
+        cbPlaySound.setOnClickListener(view -> ServiceUtil.setPlaySoundWhenWarning(cbPlaySound.isChecked()));
         cbVibrate = (CheckBox) findViewById(R.id.cbVibrate);
-        cbVibrate.setOnClickListener(view -> Util.setVibrateWhenWarning(cbVibrate.isChecked()));
+        cbVibrate.setOnClickListener(view -> ServiceUtil.setVibrateWhenWarning(cbVibrate.isChecked()));
 
         View btStartWarningService = findViewById(R.id.btStartWarningUiService);
-        btStartWarningService.setOnClickListener(view -> Util.startServiceWarning(MainActivity.this));
+        btStartWarningService.setOnClickListener(view -> ServiceUtil.startServiceWarning(MainActivity.this));
         View btUpdateConfigWarning = findViewById(R.id.btUpdateConfigWarning);
         btUpdateConfigWarning.setOnClickListener(view -> BittrexCheckInfoIntentService.getConfigWarningFromCloudAsync(success -> runOnUiThread(new Runnable() {
             @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        cbPlaySound.setChecked(Util.isPlaySoundWhenWarning());
-        cbVibrate.setChecked(Util.isVibrateWhenWarning());
+        cbPlaySound.setChecked(ServiceUtil.isPlaySoundWhenWarning());
+        cbVibrate.setChecked(ServiceUtil.isVibrateWhenWarning());
     }
 }

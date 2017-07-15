@@ -40,6 +40,9 @@ public class CoinViewModel implements RecyclerViewModel {
     private String configMin;
     private String configMax;
     private String coinImageUrl;
+    private String min24h;
+    private String max24h;
+    private String vol;
     private String statusDescription;
     private int spanSize;
 

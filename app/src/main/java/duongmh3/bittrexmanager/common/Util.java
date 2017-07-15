@@ -2,6 +2,12 @@ package duongmh3.bittrexmanager.common;
 
 import android.content.Context;
 import android.content.Intent;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -21,5 +27,11 @@ public class Util {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
+    }
+
+    public static String formatNumber(double value, String format) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        DecimalFormat numberFormat = new DecimalFormat(format, symbols);
+        return numberFormat.format(value);
     }
 }

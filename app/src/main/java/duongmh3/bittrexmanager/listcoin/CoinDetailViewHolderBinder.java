@@ -55,7 +55,7 @@ public class CoinDetailViewHolderBinder extends ViewHolderButterKnifeBinder<Coin
             imgStatus = R.drawable.down;
         }
 
-        String marketInfo = item.getMarketName() + " " + item.getStatusDescription() + "%";
+        String marketInfo = item.getMarketName() + " " + item.getStatusDescription() + "% " + "VOL: " + item.getVol() + "";
         Spanny spannyCoinInfo = new Spanny(marketInfo, new ForegroundColorSpan(colorPercent), new StyleSpan(Typeface.BOLD));
         setText(viewHolder.tvCoinName, spannyCoinInfo);
 
@@ -76,6 +76,11 @@ public class CoinDetailViewHolderBinder extends ViewHolderButterKnifeBinder<Coin
         setText(viewHolder.tvConfigMin, spannyMin);
         Spanny spannyMax = new Spanny("Max: " + item.getConfigMax(), new ForegroundColorSpan(colorMax));
         setText(viewHolder.tvConfigMax, spannyMax);
+        Spanny spannyMin24 = new Spanny("Min 24h: " + item.getMin24h(), new ForegroundColorSpan(Color.DKGRAY));
+        setText(viewHolder.tvMin24h, spannyMin24);
+
+        Spanny spannyMax24 = new Spanny("Max 24h: " + item.getMax24h(), new ForegroundColorSpan(Color.DKGRAY));
+        setText(viewHolder.tvMax24h, spannyMax24);
 
         viewHolder.ivStatus.setImageResource(imgStatus);
 
@@ -98,6 +103,10 @@ public class CoinDetailViewHolderBinder extends ViewHolderButterKnifeBinder<Coin
         TextView tvConfigMin;
         @BindView(R.id.tvConfigMax)
         TextView tvConfigMax;
+        @BindView(R.id.tvMin24h)
+        TextView tvMin24h;
+        @BindView(R.id.tvMax24h)
+        TextView tvMax24h;
 
         public ViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, @LayoutRes int layoutId) {
             super(inflater, parent, layoutId);

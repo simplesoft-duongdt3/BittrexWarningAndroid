@@ -37,10 +37,10 @@ public class MarketSummaryModel implements Serializable {
         private String marketName;
         @SerializedName("High")
         @Expose
-        private double high;
+        private String high;
         @SerializedName("Low")
         @Expose
-        private double low;
+        private String low;
         @SerializedName("Volume")
         @Expose
         private String volume;
@@ -61,10 +61,10 @@ public class MarketSummaryModel implements Serializable {
         private String ask;
         @SerializedName("OpenBuyOrders")
         @Expose
-        private int openBuyOrders;
+        private long openBuyOrders;
         @SerializedName("OpenSellOrders")
         @Expose
-        private int openSellOrders;
+        private long openSellOrders;
         @SerializedName("PrevDay")
         @Expose
         private String prevDay;
